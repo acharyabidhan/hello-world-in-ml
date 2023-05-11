@@ -18,7 +18,7 @@ class MyModel:
     def __init__(self) -> None:
         self.IM_H, self.IM_W = 28, 28
         self.CLASS_NAMES = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
-        self.MODEL_PATH = "Number classification\\model.tflite"
+        self.MODEL_PATH = "model.tflite"
         self.interpreter = tf.lite.Interpreter(model_path=self.MODEL_PATH)
         self.interpreter.get_signature_list()
         self.liteClassifier = self.interpreter.get_signature_runner("serving_default")
@@ -76,7 +76,6 @@ def predictCanvasDrawing():
     imageBytes = io.BytesIO()
     negativeImage.save(imageBytes, format="JPEG")
     imageBytes.seek(0)
-    negativeImage.save("Number classification\\last-img.jpg", format="JPEG")
     prediction = MyModel().predict(imageBytes)
     del negativeImage
     imageBytes.close()
